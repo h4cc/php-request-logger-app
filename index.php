@@ -99,6 +99,7 @@ function list_requests($db, $table) {
 }
 
 function html_start() {
+	header('Content-Type: text/html');
 	echo "<html><head></head><body>";
 }
 
