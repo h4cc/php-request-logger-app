@@ -77,5 +77,21 @@ function list_requests($db, $table) {
 	$result = $db->query($sql);
 	$rows = $result->fetch_all(MYSQLI_ASSOC);
 	
-	var_dump($rows);
+	echo "<table>";
+		echo "
+			<tr>
+				<th>ID</th>
+				<th>Data</th>
+			</tr>
+		";
+	foreach($rows as $row) {
+		echo "
+			<tr>
+				<td>",$row['id'],"</td>
+				<td><pre>",json_decode($row['request']),"</pre></td>
+			</tr>
+		";
+	}
+		
+	echo "</table>";
 }
