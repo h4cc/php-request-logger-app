@@ -21,7 +21,7 @@ switch($_SERVER["REQUEST_URI"]) {
 		echo "Logged";
 		break;
 	case "/list":
-		echo "TODO: List last X logs";
+		list_requests($db, TABLE_REQUEST_LOG);
 		break;
 	case "/create-table/".SECRET:
 		create_table($db, TABLE_REQUEST_LOG);
@@ -69,4 +69,12 @@ function log_request($db, $table) {
 	];
 	$sql = "INSERT INTO `".$table."` (`request`) VALUES ('".json_encode($data)."');";
 	$db->query($sql);
+}
+
+function list_requests($db, $table) {
+	$sql = "SELECT * FROM `".$table."` ORDER BY id DESC LIMIT 100;";
+	$result = $db->query($sql);
+	foreach($result->fetch_assoc() as $row) {
+		var_dump($row);
+	}
 }
