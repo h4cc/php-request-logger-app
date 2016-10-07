@@ -109,7 +109,7 @@ function list_requests($db, $table) {
 				<td>",$row['id'],"</td>
 				<td>",$row['timestamp'],"</td>
 				<td>
-					<a href=\"/show?id=".,$row['id'],"\">Show</a>
+					<a href=\"/show?id=",$row['id'],"\">Show</a>
 				</td>
 			</tr>
 		";
@@ -127,7 +127,7 @@ function show_request($db, $table, $id) {
 	
 	html_start();
 	echo "<pre>";
-	echo htmlentities(var_export(json_decode($row['request'], true), true))
+	echo htmlentities(var_export(json_decode($row['request'], true), true));
 	echo "</pre>";
 	html_end();
 }
