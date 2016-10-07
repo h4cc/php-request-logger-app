@@ -89,7 +89,7 @@ function list_requests($db, $table) {
 		echo "
 			<tr>
 				<td>",$row['id'],"</td>
-				<td><pre>",json_decode($row['request']),"</pre></td>
+				<td><pre>",json_decode($row['request'], true),"</pre></td>
 			</tr>
 		";
 	}
