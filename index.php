@@ -89,7 +89,7 @@ function list_requests($db, $table) {
 		echo "
 			<tr>
 				<td>",$row['id'],"</td>
-				<td><pre>",var_export(json_decode($row['request'], true), true),"</pre></td>
+				<td><pre>",htmlentities(var_export(json_decode($row['request'], true), true)),"</pre></td>
 			</tr>
 		";
 	}
