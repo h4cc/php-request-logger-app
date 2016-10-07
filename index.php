@@ -77,6 +77,7 @@ function list_requests($db, $table) {
 	$result = $db->query($sql);
 	$rows = $result->fetch_all(MYSQLI_ASSOC);
 	
+	html_start();
 	echo "<table>";
 		echo "
 			<tr>
@@ -94,4 +95,13 @@ function list_requests($db, $table) {
 	}
 		
 	echo "</table>";
+	html_end();
+}
+
+function html_start() {
+	echo "<html><head></head><body>";
+}
+
+function html_end() {
+	echo "</body></html>";
 }
