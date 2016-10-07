@@ -71,7 +71,7 @@ function create_table($db, $table) {
 
 function drop_table($db, $table) {
 	$sql = "
-		CREATE TABLE `".$table."`;
+		DROP TABLE `".$table."`;
 	";
 	$db->query($sql);
 }
@@ -100,7 +100,8 @@ function list_requests($db, $table) {
 		echo "
 			<tr>
 				<th>ID</th>
-				<th>Data</th>
+				<th>Timestamp</th>
+				<th>Link</th>
 			</tr>
 		";
 	foreach($rows as $row) {
