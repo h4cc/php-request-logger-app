@@ -12,7 +12,7 @@ define('TABLE_REQUEST_LOG', 'request_log');
 
 $db = connect_db(getenv("CLEARDB_DATABASE_URL"));
 
-switch($_SERVER["REQUEST_URI"]) {
+switch($_SERVER["REDIRECT_URL"]) {
 	case "/":
 		echo "Hi there :) <br/> Send logs to '/log' and list logs at '/list'";
 		break;
