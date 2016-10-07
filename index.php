@@ -75,13 +75,7 @@ function list_requests($db, $table) {
 	$sql = "SELECT * FROM `".$table."` ORDER BY id DESC LIMIT 100;";
 	
 	$result = $db->query($sql);
-	$rows = $result->fetch_assoc();
+	$rows = $result->fetch_all(MYSQLI_ASSOC);
 	
-	if(!$rows) {
-		return;
-	}
-
-	foreach($rows as $row) {
-		var_dump($row);
-	}
+	var_dump($rows);
 }
