@@ -7,9 +7,7 @@ var_dump($_GET);
 var_dump($_POST);
 */
 
-var_dump(sha1('secret'));
-
-define('SECRET', sha1('secret'));
+define('SECRET', sha1('secret')); // e5e9fa1ba31ecd1ae84f75caaa474f3a663f05f4
 define('TABLE_REQUEST_LOG', 'request_log');
 
 $db = connect_db(getenv("CLEARDB_DATABASE_URL"));
@@ -19,6 +17,7 @@ switch($_SERVER["REQUEST_URI"]) {
 		echo "Hi there :) <br/> Send logs to '/log' and list logs at '/list'";
 		break;
 	case "/log":
+		log_request($db, TABLE_REQUEST_LOG);
 		echo "Logged";
 		break;
 	case "/list":
@@ -56,5 +55,18 @@ function create_table($db, $table) {
 			PRIMARY KEY ( `id` )
 		);
 	";
+	$db->query($sql);
+}
+
+function log_request($db, $table) {
+	$data = [
+		'GET' => $_POST,
+		'POST' => $_POST,
+		'COOKIE' => $_COOKIE,
+		'FILE' => $_FILE,
+		'HEADERS' => getallheaders(),
+		'BODY' => file_get_contents('php://input'),
+	];
+	$sql = "INSERT INTO `".$table."` (`request`) VALUES ('".json_encode($data)."');";
 	$db->query($sql);
 }
