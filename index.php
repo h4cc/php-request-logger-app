@@ -66,7 +66,7 @@ function log_request($db, $table) {
 		'FILE' => $_FILE,
 		'BODY' => file_get_contents('php://input'),
 	];
-	$sql = "INSERT INTO `".$table."` (`request`) VALUES ('".json_encode($data)."');";
+	$sql = "INSERT INTO `".$table."` (`request`) VALUES ('".$db->real_escape_string(json_encode($data))."');";
 	$db->query($sql);
 }
 
