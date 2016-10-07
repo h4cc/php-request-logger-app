@@ -1,11 +1,11 @@
 <?php
 
-/*
+
 var_dump($_ENV);
 var_dump($_SERVER);
 var_dump($_GET);
 var_dump($_POST);
-*/
+
 
 define('SECRET', sha1('secret')); // e5e9fa1ba31ecd1ae84f75caaa474f3a663f05f4
 define('TABLE_REQUEST_LOG', 'request_log');
