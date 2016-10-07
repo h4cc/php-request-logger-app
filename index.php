@@ -60,10 +60,11 @@ function create_table($db, $table) {
 
 function log_request($db, $table) {
 	$data = [
-		'GET' => $_POST,
+		'GET' => $_GET,
 		'POST' => $_POST,
 		'COOKIE' => $_COOKIE,
-		'FILE' => $_FILE,
+		'FILES' => $_FILES,
+		'SERVER' => $_SERVER,
 		'BODY' => file_get_contents('php://input'),
 	];
 	$sql = "INSERT INTO `".$table."` (`request`) VALUES ('".$db->real_escape_string(json_encode($data))."');";
@@ -72,11 +73,14 @@ function log_request($db, $table) {
 
 function list_requests($db, $table) {
 	$sql = "SELECT * FROM `".$table."` ORDER BY id DESC LIMIT 100;";
+	
 	$result = $db->query($sql);
-	var_dump($result);
 	$rows = $result->fetch_assoc();
-	var_dump($rows);
-	return;
+	
+	if(!$rows) {
+		return;
+	}
+
 	foreach($rows as $row) {
 		var_dump($row);
 	}
