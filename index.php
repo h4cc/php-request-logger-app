@@ -31,6 +31,9 @@ switch($_SERVER["REQUEST_URI"]) {
 		drop_table($db, TABLE_REQUEST_LOG);
 		echo "OK";
 		break;
+	default:
+		echo "404";
+		break;
 }
 
 
