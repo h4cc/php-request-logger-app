@@ -78,7 +78,7 @@ function list_requests($db, $table) {
 	$rows = $result->fetch_all(MYSQLI_ASSOC);
 	
 	html_start();
-	echo "<table>";
+	echo "<table border=1>";
 		echo "
 			<tr>
 				<th>ID</th>
