@@ -7,16 +7,12 @@ var_dump($_GET);
 var_dump($_POST);
 */
 
-$url = parse_url(getenv("CLEARDB_DATABASE_URL"));
+var_dump(sha1('secret'));
 
-$server = $url["host"];
-$username = $url["user"];
-$password = $url["pass"];
-$db = substr($url["path"], 1);
+define('SECRET', sha1('secret'));
+define('TABLE_REQUEST_LOG', 'request_log');
 
-$conn = new mysqli($server, $username, $password, $db);
-
-var_dump($conn);
+$db = connect_db(getenv("CLEARDB_DATABASE_URL"));
 
 switch($_SERVER["REQUEST_URI"]) {
 	case "/":
@@ -28,4 +24,37 @@ switch($_SERVER["REQUEST_URI"]) {
 	case "/list":
 		echo "TODO: List last X logs";
 		break;
+	case "/create-table/".SECRET:
+		create_table($db, TABLE_REQUEST_LOG);
+		echo "OK";
+		break;
+}
+
+
+die();
+
+//--- Internals ---
+
+function connect_db($url) {
+	$url = parse_url($url);
+
+	$server = $url["host"];
+	$username = $url["user"];
+	$password = $url["pass"];
+	$db = substr($url["path"], 1);
+
+	$db = new mysqli($server, $username, $password, $db);
+	
+	return $db;
+}
+
+function create_table($db, $table) {
+	$sql = "
+		CREATE TABLE `".$table."` (
+			`id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+			`request` TEXT NOT NULL ,
+			PRIMARY KEY ( `id` )
+		);
+	";
+	$db->query($sql);
 }
