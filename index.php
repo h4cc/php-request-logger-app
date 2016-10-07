@@ -23,6 +23,9 @@ switch($_SERVER["REQUEST_URI"]) {
 	case "/list":
 		list_requests($db, TABLE_REQUEST_LOG);
 		break;
+	case "/show":
+		show_request($db, TABLE_REQUEST_LOG, (int)$_GET['id']);
+		break;
 	case "/create-table/".SECRET:
 		create_table($db, TABLE_REQUEST_LOG);
 		echo "OK";
@@ -104,12 +107,28 @@ function list_requests($db, $table) {
 		echo "
 			<tr>
 				<td>",$row['id'],"</td>
-				<td><pre>",htmlentities(var_export(json_decode($row['request'], true), true)),"</pre></td>
+				<td>",$row['timestamp'],"</td>
+				<td>
+					<a href=\"/show?id=".,$row['id'],"\">Show</a>
+				</td>
 			</tr>
 		";
 	}
-		
+	
 	echo "</table>";
+	html_end();
+}
+
+function show_request($db, $table, $id) {
+	$sql = "SELECT * FROM `".$table."` WHERE id = ".(int)$id.";";
+	
+	$result = $db->query($sql);
+	$row = $result->fetch_assoc();
+	
+	html_start();
+	echo "<pre>";
+	echo htmlentities(var_export(json_decode($row['request'], true), true))
+	echo "</pre>";
 	html_end();
 }
 
