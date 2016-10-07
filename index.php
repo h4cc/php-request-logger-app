@@ -74,7 +74,8 @@ function log_request($db, $table) {
 function list_requests($db, $table) {
 	$sql = "SELECT * FROM `".$table."` ORDER BY id DESC LIMIT 100;";
 	$result = $db->query($sql);
-	foreach($result->fetch_assoc() as $row) {
+	$rows = $result->fetch_assoc();
+	foreach($rows as $row) {
 		var_dump($row);
 	}
 }
