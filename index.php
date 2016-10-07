@@ -27,6 +27,10 @@ switch($_SERVER["REQUEST_URI"]) {
 		create_table($db, TABLE_REQUEST_LOG);
 		echo "OK";
 		break;
+	case "/drop-table/".SECRET:
+		drop_table($db, TABLE_REQUEST_LOG);
+		echo "OK";
+		break;
 }
 
 
@@ -51,9 +55,17 @@ function create_table($db, $table) {
 	$sql = "
 		CREATE TABLE `".$table."` (
 			`id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+			`timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ,
 			`request` TEXT NOT NULL ,
 			PRIMARY KEY ( `id` )
 		);
+	";
+	$db->query($sql);
+}
+
+function drop_table($db, $table) {
+	$sql = "
+		CREATE TABLE `".$table."`;
 	";
 	$db->query($sql);
 }
