@@ -9,8 +9,11 @@ var_dump($_POST);
 
 define('SECRET', sha1('secret')); // e5e9fa1ba31ecd1ae84f75caaa474f3a663f05f4
 define('TABLE_REQUEST_LOG', 'request_log');
+define('KEEP_ENTRIES', 500);
 
 $db = connect_db(getenv("CLEARDB_DATABASE_URL"));
+
+remove_old($db, TABLE_REQUEST_LOG, KEEP_ENTRIES);
 
 switch($_SERVER["REDIRECT_URL"]) {
 	case "/":
@@ -55,6 +58,19 @@ function connect_db($url) {
 	$db = new mysqli($server, $username, $password, $db);
 	
 	return $db;
+}
+
+function remove_old($db, $table, $keep = 500) {
+    $sql = "
+      delete from `".$table."` 
+      where id not in (
+        select id 
+        from `".$table."` 
+        order by id desc 
+        limit ".(int)$keep."
+      )
+    ";
+    $db->query($sql);
 }
 
 function create_table($db, $table) {
