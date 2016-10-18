@@ -9,7 +9,7 @@ var_dump($_POST);
 
 define('SECRET', sha1('secret')); // e5e9fa1ba31ecd1ae84f75caaa474f3a663f05f4
 define('TABLE_REQUEST_LOG', 'request_log');
-define('KEEP_ENTRIES', 300);
+define('KEEP_ENTRIES', 100);
 
 $db = connect_db(getenv("CLEARDB_DATABASE_URL"));
 
