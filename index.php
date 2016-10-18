@@ -106,7 +106,7 @@ function log_request($db, $table) {
 }
 
 function list_requests($db, $table) {
-	$sql = "SELECT * FROM `".$table."` ORDER BY id DESC LIMIT 100;";
+	$sql = "SELECT * FROM `".$table."` ORDER BY id DESC LIMIT 110;";
 	
 	$result = $db->query($sql);
 	$rows = $result->fetch_all(MYSQLI_ASSOC);
