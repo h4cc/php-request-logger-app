@@ -79,7 +79,7 @@ function remove_old($db, $table, $keep = 500) {
 
     $sql = "
       delete from `".$table."` 
-      where id in (".implode(',', $ids_keep).")
+      where id not in (".implode(',', $ids_keep).")
     ";
     $db->query($sql);
 }
