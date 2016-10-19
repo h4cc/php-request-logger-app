@@ -61,14 +61,25 @@ function connect_db($url) {
 }
 
 function remove_old($db, $table, $keep = 500) {
+
     $sql = "
-      delete from `".$table."` 
-      where id not in (
         select id 
         from `".$table."` 
         order by id desc 
         limit ".(int)$keep."
-      )
+    ";
+
+    $result = $db->query($sql);
+    $rows = $result->fetch_all(MYSQLI_ASSOC);
+
+    $ids_keep = [];
+    foreach($rows as $row) {
+        $ids_keep[] = $row['id'];
+    }
+
+    $sql = "
+      delete from `".$table."` 
+      where id in (".implode(',', $ids_keep).")
     ";
     $db->query($sql);
 }
